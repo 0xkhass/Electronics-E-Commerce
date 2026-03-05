@@ -1,0 +1,45 @@
+## Build and Release Folders
+bin/
+obj/
+TestResults/
+*.out
+*.orig
+*.swp
+
+## Visual Studio & IDE specific files
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.ide/
+.vscode/
+.idea/
+*.iws
+*.iml
+*.ipr
+
+## OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+## Publish Output
+publish/
+*.[Pp]ublish.xml
+
+## NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/
+*.nuget.props
+*.nuget.targets
+
+## Environment Variables / Secrets
+appsettings.Development.json
+appsettings.Local.json
+.env
