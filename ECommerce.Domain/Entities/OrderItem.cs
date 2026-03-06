@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     public class OrderItem
     {
         public Guid OrderItemId { get; private set; }
         public Guid OrderId { get; private set; } // FK, Index
+        public Order Order { get; private set; } = null!;// Navigation property
+
         public Guid ProductId { get; private set; }// FK
+        public Product Product { get; private set; } = null!;// Navigation property
         public int Quantity { get; private set; }
         public decimal UnitPrice { get; private set; }
 

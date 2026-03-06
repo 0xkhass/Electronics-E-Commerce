@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     
     public class Payment
     {
         public Guid PaymentId { get; private set; }
         public Guid OrderId { get; private set; } // FK
+        public Order Order { get; private set; } = null!; // Navigation property
         public string TransactionId { get; private set; } = string.Empty; // Unique
         public PaymentMethod PaymentMethod { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
