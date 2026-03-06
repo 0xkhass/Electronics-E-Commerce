@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     public class Category
     {

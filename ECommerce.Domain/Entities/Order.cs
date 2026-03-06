@@ -6,13 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     public class Order
     {
         public Guid OrderId { get; private set; }
         public Guid UserId { get; private set; }
-        public int PaymentId { get; private set; }
+        public User User { get; private set; } = null!; // Navigation property
+        public Guid PaymentId { get; private set; }
+        public Payment Payment { get; private set; } = null!; // Navigation property
         public decimal TotalAmount { get; private set; }
         public OrderStatus Status { get; private set; }
         private readonly List<OrderItem> _orderItems = new();

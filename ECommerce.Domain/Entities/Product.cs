@@ -1,11 +1,12 @@
-﻿using ECommerce.Domain.Exceptions;
+﻿using ECommerce.Domain.Entities;
+using ECommerce.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     public class Product
     {
@@ -17,9 +18,11 @@ namespace ECommerce.Domain.Entites
         public int StockQuantity { get; private set; }
         public decimal ProductDiscountPercentage { get; private set; }
         public bool IsDeleted { get; private set; }
-        public uint RowVersion { get; private set; } // For optimistic concurrency control
+        public byte[] RowVersion { get; private set; } = Array.Empty<byte>(); // For optimistic concurrency control
         public Guid BrandId { get; private set; }
+        public Brand Brand { get; private set; } = null!;
         public Guid CategoryId { get; private set; }
+        public Category Category { get; private set; } = null!;
 
         public Product() { } // For EF Core
 

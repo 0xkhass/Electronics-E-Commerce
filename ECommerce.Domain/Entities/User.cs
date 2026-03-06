@@ -1,11 +1,12 @@
-﻿using ECommerce.Domain.Exceptions;
+﻿using ECommerce.Domain.Enums;
+using ECommerce.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Domain.Entites
+namespace ECommerce.Domain.Entities
 {
     public class User
     {
@@ -16,7 +17,7 @@ namespace ECommerce.Domain.Entites
         public string PasswordHash { get; private set; } = string.Empty;
 
         public bool IsActive { get; private set; } = true;
-        public Guid RoleId { get; private set; }
+        public UserRole Role { get; private set; }
 
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
@@ -27,8 +28,7 @@ namespace ECommerce.Domain.Entites
             string userName,
             string fullName,
             string email,
-            string passwordHash,
-            Guid roleId
+            string passwordHash
         ) 
         {
             if (string.IsNullOrWhiteSpace(userName))
@@ -49,7 +49,7 @@ namespace ECommerce.Domain.Entites
             FullName = fullName;
             Email = email;
             PasswordHash = passwordHash;
-            RoleId = roleId;
+            Role = UserRole.Customer; // Default role
             IsActive = true;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
@@ -79,9 +79,9 @@ namespace ECommerce.Domain.Entites
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void AssignRole(Guid newRoleId) 
+        public void AssignRole(UserRole newRole) 
         {
-            RoleId = newRoleId;
+            Role = newRole;
             UpdatedAt = DateTime.UtcNow;
         }
     }
