@@ -27,7 +27,7 @@ namespace ECommerce.Infrastructure.Repositories
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _context.Users
-                .FirstAsync(u => u.Email == email); // This will throw an exception if no user is found with the given email.
+                .FirstOrDefaultAsync(u => u.Email == email); // This will throw an exception if no user is found with the given email.
             // You can handle this in by using FirstOrDefaultAsync to return null instead.
             // FirstOrDefaultAsync(u => u.Email == email); 
             // Use this if you want to return null instead of throwing an exception when no user is found

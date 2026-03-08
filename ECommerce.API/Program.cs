@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using ECommerce.API.Middleware;
 
 
 
@@ -39,7 +40,6 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-
 // JWT AUTHENTICATION
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"]!;
@@ -62,6 +62,7 @@ builder.Services.AddAuthentication(options =>
           ClockSkew = TimeSpan.Zero // Token expiration time is exact, no additional time allowed
       };
 });
+
 
 builder.Services.AddAuthorization();
 
@@ -124,13 +125,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce API v1");
+        options.RoutePrefix = string.Empty; // opens at https://localhost:55900/
+    });
 }
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");        // ← this was missing
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.Run();
