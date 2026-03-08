@@ -22,6 +22,8 @@ namespace ECommerce.Infrastructure.Persistence
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens { get; set; } 
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

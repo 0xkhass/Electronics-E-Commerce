@@ -13,8 +13,25 @@ namespace ECommerce.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
+            // PK
+            builder.HasKey(i => i.OrderItemId);
+
+            // Properties
             builder.Property(o => o.UnitPrice)
-                .HasPrecision(18, 2);
+                .HasPrecision(18, 2)
+                .IsRequired();
+
+            builder.Property(i => i.Quantity)
+                .IsRequired();
+
+            // Index on OrderId for
+            builder.HasIndex(i => i.OrderId);
+
+            // Relationships
+            builder.HasOne(i => i.Product)
+                .WithMany()
+                .HasForeignKey(i => i.ProductId)
+                .OnDelete(DeleteBehavior.Restrict); // don't delete items when product deleted.
 
         }
     }

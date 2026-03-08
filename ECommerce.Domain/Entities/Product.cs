@@ -18,7 +18,7 @@ namespace ECommerce.Domain.Entities
         public int StockQuantity { get; private set; }
         public decimal ProductDiscountPercentage { get; private set; }
         public bool IsDeleted { get; private set; }
-        public byte[] RowVersion { get; private set; } = Array.Empty<byte>(); // For optimistic concurrency control
+        public byte[] RowVersion { get; private set; } = []; // For optimistic concurrency control
         public Guid BrandId { get; private set; }
         public Brand Brand { get; private set; } = null!;
         public Guid CategoryId { get; private set; }

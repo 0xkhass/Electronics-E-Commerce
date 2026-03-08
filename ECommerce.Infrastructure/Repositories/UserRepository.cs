@@ -24,7 +24,7 @@ namespace ECommerce.Infrastructure.Repositories
         /// <param name="email">The email address of the user to retrieve.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the user with the specified
         /// email address.</returns>
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _context.Users
                 .FirstAsync(u => u.Email == email); // This will throw an exception if no user is found with the given email.
@@ -41,7 +41,7 @@ namespace ECommerce.Infrastructure.Repositories
         /// <param name="userId">The unique identifier of the user to retrieve.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the user with the specified
         /// identifier.</returns>
-        public async Task<User> GetUserByIdAsync(Guid userId)
+        public async Task<User?> GetUserByIdAsync(Guid userId)
         {
             return await _context.Users
                 .FirstAsync(u => u.UserId == userId); // This will throw an exception if no user is found with the given userId.
@@ -57,8 +57,8 @@ namespace ECommerce.Infrastructure.Repositories
 
         public async Task AddUserAsync(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _context.Users.AddAsync(user);
+            //await _context.SaveChangesAsync();
         }
 
         // PUT
@@ -70,7 +70,7 @@ namespace ECommerce.Infrastructure.Repositories
         public async Task UpdateUserAsync(User user)
         {
             _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
 
@@ -84,10 +84,10 @@ namespace ECommerce.Infrastructure.Repositories
         {
             var userToDelete = await _context.Users.FindAsync(userId);
                 
-            if (userToDelete != null) 
+            if (userToDelete is not null) 
             {
                 _context.Users.Remove(userToDelete);
-                await _context.SaveChangesAsync();
+               // await _context.SaveChangesAsync();
             }
         }
     }

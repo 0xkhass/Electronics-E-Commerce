@@ -1,5 +1,6 @@
 ﻿using ECommerce.Application.Common.Exceptions;
 using ECommerce.Application.DTOs.Product;
+using ECommerce.Application.Interfaces;
 using ECommerce.Application.Interfaces.Repositories;
 using ECommerce.Application.Interfaces.Services;
 using ECommerce.Domain.Entities;
@@ -9,15 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Application.Services
+namespace ECommerce.Application.Services.ProductService
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<ProductResponseDTO>> GetAllAsync()
@@ -32,8 +35,12 @@ namespace ECommerce.Application.Services
 
         public async Task<ProductResponseDTO?> GetByIdAsync(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ValidationException("Invalid product ID.");
+            }
             var productById = await _productRepository.GetByIdAsync(id);
-            return productById is null 
+            return productById is null || productById.IsDeleted
                 ? throw new NotFoundException($"Product with {id} not found.") 
                 : MapToResponseDTO(productById);
         }
@@ -52,15 +59,18 @@ namespace ECommerce.Application.Services
             );
 
             await _productRepository.AddAsync(productToCreate);
-            return MapToResponseDTO(productToCreate);
+            await _unitOfWork.SaveChangesAsync();
 
+            return MapToResponseDTO(productToCreate);
         }
 
         public async Task UpdateAsync(Guid id, UpdateProductDTO productUpdateDTO)
         {
+            if (id == Guid.Empty) 
+                throw new ValidationException("Invalid product ID.");
+
             var productToUpdate = await _productRepository.GetByIdAsync(id) 
                 ?? throw new NotFoundException($"Product with {id} not found.");
-
 
             productToUpdate.UpdateDetails(
                 productUpdateDTO.Name,
@@ -70,15 +80,21 @@ namespace ECommerce.Application.Services
             );
 
             await _productRepository.UpdateAsync(productToUpdate);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid id)
         {
+            if (id == Guid.Empty) 
+               throw new ValidationException("Invalid product ID.");
+
             var productToDelete = await _productRepository.GetByIdAsync(id) 
                 ?? throw new NotFoundException($"Product with {id} not found.");
 
             productToDelete.SoftDelete();
+
             await _productRepository.UpdateAsync(productToDelete);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         // Private helper method to map Product entity to ProductResponseDTO

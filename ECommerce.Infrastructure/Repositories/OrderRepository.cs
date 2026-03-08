@@ -17,10 +17,13 @@ namespace ECommerce.Infrastructure.Repositories
         // GET
         public async Task<Order?> GetOrderByIdAsync(Guid orderId)
         {
-            return await _context.Orders.FindAsync(orderId);
+            return await _context.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(i => i.Product)
+                    .FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
 
-        public async Task<IReadOnlyList<Order>> GetOrdersByUserIdAsync(Guid userId)
+        public async Task<IReadOnlyList<Order>> GetAllOrdersByUserIdAsync(Guid userId)
         {
             return await _context.Orders.Where(o => o.UserId == userId).ToListAsync();
         }
@@ -29,24 +32,35 @@ namespace ECommerce.Infrastructure.Repositories
 
         public async Task AddOrderAsync(Order order)
         {
-           _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+           await _context.Orders.AddAsync(order);
+            //await _context.SaveChangesAsync();
         }
         // PUT
         public async Task UpdateOrderAsync(Order order)
         {
             _context.Orders.Update(order);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
+        }
+
+        public async Task CancelOrderAsync(Guid orderId) 
+        {
+            var orderToCancel = await _context.Orders.FindAsync(orderId);
+            if (orderToCancel is not null)
+            {
+                orderToCancel.CancelOrder();
+                _context.Orders.Update(orderToCancel);
+                //await _context.SaveChangesAsync();
+            }
         }
 
         // DELETE
         public async Task DeleteOrderAsync(Guid orderId)
         {
             var orderToDelete = await _context.Orders.FindAsync(orderId);
-            if (orderToDelete != null)
+            if (orderToDelete is not null)
             {
                 _context.Orders.Remove(orderToDelete);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
             }
         }
     }

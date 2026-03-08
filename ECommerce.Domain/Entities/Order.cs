@@ -3,6 +3,7 @@ using ECommerce.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +14,8 @@ namespace ECommerce.Domain.Entities
         public Guid OrderId { get; private set; }
         public Guid UserId { get; private set; }
         public User User { get; private set; } = null!; // Navigation property
-        public Guid PaymentId { get; private set; }
-        public Payment Payment { get; private set; } = null!; // Navigation property
+        public Guid? PaymentId { get; private set; }
+        public Payment? Payment { get; private set; } = null!; // Navigation property
         public decimal TotalAmount { get; private set; }
         public OrderStatus Status { get; private set; }
         private readonly List<OrderItem> _orderItems = new();
@@ -46,6 +47,13 @@ namespace ECommerce.Domain.Entities
             if (Status != OrderStatus.Pending)
                 throw new DomainExceptions("Cannot modify an order that is not longer pending.");
 
+            if (productId == Guid.Empty)
+                throw new DomainExceptions("Product ID cannot be empty.");
+            if (quantity <= 0)
+                throw new DomainExceptions("Quantity must be greater than zero.");
+            if (unitPrice < 0)
+                throw new DomainExceptions("Unit price cannot be negative.");
+
             var existingItem = _orderItems.FirstOrDefault(i => i.ProductId == productId);
             if (existingItem != null)
             {
@@ -58,6 +66,17 @@ namespace ECommerce.Domain.Entities
             }
 
             RecalculateTotal();
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void AssignPayment(Guid paymentId) 
+        {
+            if (paymentId == Guid.Empty)
+                throw new DomainExceptions("Payment ID cannot be empty.");
+            if (PaymentId.HasValue)
+                throw new DomainExceptions("Payment is already assigned to this order.");
+
+            PaymentId = paymentId;
             UpdatedAt = DateTime.UtcNow;
         }
 
@@ -75,15 +94,20 @@ namespace ECommerce.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void UpdateStatus(OrderStatus newStatus) 
+        private static readonly Dictionary<OrderStatus, OrderStatus[]> _allowedTransitions = new()
         {
-            // BASIC status transition rules
-            if (Status == OrderStatus.Cancelled || Status == OrderStatus.Expired)
-                throw new DomainExceptions("Cannot change status of a cancelled or expired order.");
+            // Pending => Paid => Shipped => Cancelled/Expired
+            { OrderStatus.Pending, [OrderStatus.Cancelled]},
+            { OrderStatus.Paid, [OrderStatus.Shipped, OrderStatus.Cancelled]},
+            { OrderStatus.Shipped, [OrderStatus.Shipped]},
+            { OrderStatus.Cancelled, []},
+            { OrderStatus.Expired, []},
+        };
 
-            if (Status == OrderStatus.Shipped)
-                throw new DomainExceptions("Cannot change status of a shipped order.");
-
+        public void UpdateStatus(OrderStatus newStatus)
+        {
+            if (!_allowedTransitions[Status].Contains(newStatus)) 
+                throw new DomainExceptions($"Invalid status transition from {Status} to {newStatus}.");
             Status = newStatus;
             UpdatedAt = DateTime.UtcNow;
         }

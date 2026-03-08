@@ -61,7 +61,7 @@ namespace ECommerce.Infrastructure.Repositories
         public async Task AddAsync(Product product)
         {
             await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ECommerce.Infrastructure.Repositories
         {
 
             _context.Products.Update(product); // no await why ?
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
 
@@ -87,10 +87,10 @@ namespace ECommerce.Infrastructure.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var product = await _context.Products.FindAsync(id);
-            if (product != null) 
+            if (product is not null) 
             {
                 _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
             }
         }
 
