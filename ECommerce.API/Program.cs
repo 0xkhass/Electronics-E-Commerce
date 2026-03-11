@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options => 
   {
-      options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+      options.TokenValidationParameters = new TokenValidationParameters
       {
           ValidateIssuer = true,
           ValidateAudience = true,
@@ -69,11 +69,18 @@ builder.Services.AddAuthorization();
 // CORS
 builder.Services.AddCors(options => 
 {
-    options.AddPolicy("AllowAll", policy => 
+    /*options.AddPolicy("AllowAll", policy => 
     {
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
+    });*/
+
+    options.AddPolicy("AllowReact", policy => 
+    {
+        policy.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -118,23 +125,29 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
+
+
+
 // BUILD 
 var app = builder.Build();
 
 // MIDDLEWARE PIPELINE
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce API v1");
-        options.RoutePrefix = string.Empty; // opens at https://localhost:55900/
-    });
+   app.UseSwagger();
+   app.UseSwaggerUI(options =>
+   {
+     options.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce API v1");
+     options.RoutePrefix = string.Empty; // opens at https://localhost:55900/
+   });
 }
+   
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");        // ← this was missing
+//app.UseCors("AllowAll");        // ← this was missing
+app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
