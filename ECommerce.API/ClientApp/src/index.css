@@ -1,68 +1,283 @@
+@import "tailwindcss";
+
+/* ============================================
+   TECH STORE — COLOR SYSTEM
+   Refined Dark Theme for Premium Electronics
+   ============================================ */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+
+  /* ── Core Palette ── */
+  --charcoal-900: #1E2C32;   /* deepest bg, navbar */
+  --charcoal-800: #263238;   /* page background */
+  --charcoal-700: #2E3D44;   /* card background */
+  --charcoal-600: #3A4D56;   /* input background, borders */
+  --charcoal-500: #4A606B;   /* disabled states, dividers */
+
+  /* ── Accent — Tan/Gold (CTA, prices, stars) ── */
+  --tan-400: #C9A87C;        /* hover state */
+  --tan-500: #AC8E69;        /* primary accent — buttons, prices */
+  --tan-600: #8F7254;        /* pressed state */
+
+  /* ── Secondary Accent — BlueGray (links, badges, focus) ── */
+  --blue-gray-300: #7AAAB6;  /* light variant */
+  --blue-gray-400: #5C8491;  /* primary — links, borders focus */
+  --blue-gray-500: #4A6E7A;  /* hover state */
+
+  /* ── Neutral — Khaki (text hierarchy) ── */
+  --khaki-300: #D4C9B8;      /* headings */
+  --khaki-400: #C0B3A0;      /* subheadings, labels */
+  --khaki-500: #9E9181;      /* muted text, placeholders */
+
+  /* ── Text ── */
+  --text-primary:   rgba(255, 255, 255, 0.92);   /* product titles, main text */
+  --text-secondary: var(--khaki-300);             /* descriptions, specs */
+  --text-muted:     var(--khaki-500);             /* placeholders, metadata */
+  --text-disabled:  rgba(255, 255, 255, 0.30);
+
+  /* ── Semantic / Status ── */
+  --color-success:  #4CAF82;   /* In Stock */
+  --color-warning:  #E8A838;   /* Low Stock */
+  --color-error:    #E05C5C;   /* Out of Stock, errors */
+  --color-info:     var(--blue-gray-400);
+
+  /* ── Backgrounds ── */
+  --bg-page:        var(--charcoal-800);
+  --bg-navbar:      var(--charcoal-900);
+  --bg-card:        var(--charcoal-700);
+  --bg-input:       var(--charcoal-600);
+  --bg-overlay:     rgba(30, 44, 50, 0.85);  /* modals, drawers */
+
+  /* ── Borders ── */
+  --border-subtle:  rgba(90, 120, 130, 0.20);
+  --border-default: rgba(90, 120, 130, 0.35);
+  --border-focus:   var(--tan-500);
+  --border-hover:   var(--blue-gray-400);
+
+  /* ── Buttons ── */
+  --btn-primary-bg:      var(--tan-500);
+  --btn-primary-text:    var(--charcoal-900);
+  --btn-primary-hover:   var(--tan-400);
+  --btn-secondary-bg:    transparent;
+  --btn-secondary-text:  var(--blue-gray-300);
+  --btn-secondary-border: var(--blue-gray-400);
+
+  /* ── Product Specific ── */
+  --price-color:         var(--tan-400);
+  --price-original:      var(--khaki-500);   /* strikethrough */
+  --badge-discount-bg:   var(--tan-500);
+  --badge-discount-text: var(--charcoal-900);
+  --star-color:          var(--tan-400);
+  --tag-color:           var(--blue-gray-400);
+
+  /* ── Shadows ── */
+  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.30);
+  --shadow-hover:  0 8px 32px rgba(0, 0, 0, 0.45);
+  --shadow-modal:  0 16px 64px rgba(0, 0, 0, 0.60);
+
+  /* ── Spacing & Radius ── */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+
+  /* ── Typography ── */
+  font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ── Headings ── */
+h1 { font-size: 2.8rem;  line-height: 1.15; font-weight: 700; color: var(--text-primary);   letter-spacing: -0.02em; }
+h2 { font-size: 2.0rem;  line-height: 1.25; font-weight: 600; color: var(--khaki-300);      letter-spacing: -0.01em; }
+h3 { font-size: 1.4rem;  line-height: 1.35; font-weight: 600; color: var(--khaki-300); }
+h4 { font-size: 1.1rem;  line-height: 1.4;  font-weight: 500; color: var(--khaki-400); }
+h5 { font-size: 0.95rem; line-height: 1.5;  font-weight: 500; color: var(--khaki-400); }
+h6 { font-size: 0.85rem; line-height: 1.5;  font-weight: 500; color: var(--khaki-500); }
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+/* ── Links ── */
+a {
+  color: var(--blue-gray-300);
+  text-decoration: none;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  transition: color 0.2s ease;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+a:hover {
+  color: var(--tan-400);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* ── Inputs ── */
+input, textarea, select {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
 }
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(172, 142, 105, 0.15);
+}
+input:disabled {
+  color: var(--text-disabled);
+  border-color: var(--charcoal-500);
+  cursor: not-allowed;
+}
+
+/* ── Buttons ── */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  padding: 0.65rem 1.5rem;
+}
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  box-shadow: 0 4px 16px rgba(172, 142, 105, 0.30);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--btn-secondary-border);
+  padding: 0.65rem 1.5rem;
+}
+.btn-secondary:hover {
+  background-color: rgba(92, 132, 145, 0.12);
+  border-color: var(--blue-gray-300);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+}
+.btn-ghost:hover {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.05);
+}
+
+/* ── Cards ── */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--border-default);
+}
+
+/* ── Product Price ── */
+.price {
+  color: var(--price-color);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.price-original {
+  color: var(--price-original);
+  font-size: 0.9rem;
+  text-decoration: line-through;
+}
+
+/* ── Badges ── */
+.badge-discount {
+  background-color: var(--badge-discount-bg);
+  color: var(--badge-discount-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+.badge-stock {
+  color: var(--color-success);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.badge-low-stock {
+  color: var(--color-warning);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.badge-out-of-stock {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* ── Tags / Category Labels ── */
+.tag {
+  display: inline-block;
+  color: var(--tag-color);
+  border: 1px solid var(--blue-gray-500);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: rgba(92, 132, 145, 0.10);
+}
+
+/* ── Stars ── */
+.star { color: var(--star-color); }
+.star-empty { color: var(--charcoal-500); }
+
+/* ── Dividers ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 1.5rem 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--charcoal-900); }
+::-webkit-scrollbar-thumb { background: var(--charcoal-500); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--blue-gray-500); }
