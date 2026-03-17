@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { AuthContextType } from "../../shared/types/auth/AuthContextType";
 import type { User } from "../../shared/types/User";
-import { getCurrentUser } from "../../infrastructure/services/authServices";
+import { getCurrentUser, logoutUser } from "../../infrastructure/services/authServices";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    await logout(); // Call backend to clear cookies
+    await logoutUser(); // Call backend to clear cookies
     setUser(null);
   };
 

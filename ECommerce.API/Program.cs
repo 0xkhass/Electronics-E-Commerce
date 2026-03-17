@@ -61,7 +61,16 @@ builder.Services.AddAuthentication(options =>
           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
           ClockSkew = TimeSpan.Zero // Token expiration time is exact, no additional time allowed
       };
-});
+
+      options.Events = new JwtBearerEvents
+      {
+          OnMessageReceived = context =>
+          {
+              context.Token = context.Request.Cookies["accessToken"];
+              return Task.CompletedTask;
+          }
+      };
+  });
 
 
 builder.Services.AddAuthorization();

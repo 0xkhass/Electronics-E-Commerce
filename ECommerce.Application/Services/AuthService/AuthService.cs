@@ -16,6 +16,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using ECommerce.Application.Interfaces;
+using ECommerce.Application.DTOs.User;
 
 namespace ECommerce.Application.Services.AuthService
 {
