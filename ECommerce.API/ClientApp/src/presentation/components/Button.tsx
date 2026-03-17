@@ -1,4 +1,4 @@
-import type { ButtonProps } from "../../shared/constants/ButtonProps"
+import type { ButtonProps } from "../../shared/types/components/ButtonProps"
 
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
@@ -14,11 +14,11 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-[var(--tan-500)] text-[var(--charcoal-900)] px-6 py-3 hover:bg-[var(--tan-400)] hover:shadow-[0_4px_20px_rgba(172,142,105,0.35)]',
+      'bg-[var(--tan-500)] text-(--charcoal-900) px-6 py-3 hover:bg-(--tan-400) hover:shadow-[0_4px_20px_rgba(172,142,105,0.35)]',
     secondary:
-      'bg-transparent text-[var(--blue-gray-300)] border border-[var(--blue-gray-400)] px-6 py-3 hover:bg-[rgba(92,132,145,0.12)] hover:border-[var(--blue-gray-300)]',
+      'bg-transparent text-(--blue-gray-300) border border-(--blue-gray-400) px-6 py-3 hover:bg-[rgba(92,132,145,0.12)] hover:border-(--blue-gray-300)',
     ghost:
-      'bg-transparent text-[var(--text-muted)] px-4 py-2 hover:text-[var(--text-primary)] hover:bg-[rgba(255,255,255,0.05)]',
+      'bg-transparent text-(--text-muted) px-4 py-2 hover:text-(--text-primary) hover:bg-[rgba(255,255,255,0.05)]',
   }
 
   return (

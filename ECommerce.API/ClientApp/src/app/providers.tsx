@@ -1,4 +1,6 @@
+import { AuthProvider } from "../presentation/contexts/AuthContext";
+
 export const AppProviders = ({children}: {children: React.ReactNode}) => 
 {
-    return <>{children}</>
+    return <AuthProvider>{children}</AuthProvider>
 };

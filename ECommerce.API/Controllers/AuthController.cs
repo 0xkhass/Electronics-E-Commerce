@@ -33,7 +33,21 @@ namespace ECommerce.API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
             var result = await _authService.LoginAsync(loginDTO);
-            return Ok(result);
+
+            // Create a secure cookie options
+            var cookieOptions = new CookieOptions
+            { 
+                HttpOnly = true, // js can't read this
+                Secure = true, // Require https
+                SameSite = SameSiteMode.Strict, // no csrf
+                Expires = DateTime.UtcNow.AddDays(7),
+            };
+
+            Response.Cookies.Append("accessToken", result.AccessToken, cookieOptions);
+            Response.Cookies.Append("refreshToken", result.RefreshToken, cookieOptions);
+
+
+            return Ok(new { User = result.User});
         }
 
         // POST: api/Auth/refresh-token
@@ -52,6 +66,8 @@ namespace ECommerce.API.Controllers
         public async Task<IActionResult> Logout([FromBody] RefreshTokenDTO refreshTokenDTO)
         {
             await _authService.LogoutAsync(refreshTokenDTO);
+            Response.Cookies.Delete("accessToken");
+            Response.Cookies.Delete("refreshToken");
             return NoContent();
         }
 
