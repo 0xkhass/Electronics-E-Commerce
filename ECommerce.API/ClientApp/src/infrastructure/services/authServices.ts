@@ -30,8 +30,12 @@ export const registerApi =  async (
 };
 
 
+// authServices.ts
 export const getCurrentUser = async (): Promise<User> => {
-    const { data } = await api.get<User>('/api/user');
-
+    const { data } = await api.get<User>('/api/auth/me');
     return data;
+};
+
+export const logoutUser = async (): Promise<void> => {
+    await api.post('/api/auth/logout');
 };
