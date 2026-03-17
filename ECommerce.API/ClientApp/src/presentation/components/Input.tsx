@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { InputProps } from "../../shared/constants/InputProps";
+import type { InputProps } from "../../shared/types/components/InputProps";
 
 export const Input: React.FC<InputProps> = ({
   label,
@@ -20,7 +20,7 @@ export const Input: React.FC<InputProps> = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="text-sm font-medium text-[var(--khaki-400)] tracking-wide"
+          className="text-sm font-medium text-(--khaki-400) tracking-wide"
         >
           {label}
         </label>
@@ -30,8 +30,8 @@ export const Input: React.FC<InputProps> = ({
         {/* Left Icon */}
         {icon && (
           <span
-            className="absolute left-3.5 top-1/2 -transalte-y-1/2 text-[var(--text-muted)] 
-                    group-focus-within:text-[var(--tan-500)] transition-colors duration-200"
+            className="absolute left-3 top-1/3 -transalte-y-1/2 text-(--text-muted) 
+                    group-focus-within:text-(--tan-500) transition-colors duration-200"
           >
             {icon}
           </span>
@@ -41,14 +41,14 @@ export const Input: React.FC<InputProps> = ({
           id={inputId}
           type={inputType}
           className={`
-            w-full bg-[var(--bg-input)] text-[var(--text-primary)]
-            border border-[var(--border-default)] rounded-[10px]
-            py-3 pr-4 text-sm
+            w-full bg-(--bg-input) text-(--text-primary)
+            border border-(--border-default) rounded-[10px]
+            py-3 pr-8 text-sm
             ${icon ? "pl-10" : "pl-4"}
-            placeholder:text-[var(--text-muted)]
+            placeholder:text-(--text-muted)
             outline-none transition-all duration-200
-            focus:border-[var(--tan-500)] focus:shadow-[0_0_0_3px_rgba(172,142,105,0.15)]
-            ${error ? "border-[var(--color-error)] focus:border-[var(--color-error)] focus:shadow-[0_0_0_3px_rgba(224,92,92,0.15)]" : ""}
+            focus:border-(--tan-500) focus:shadow-[0_0_0_3px_rgba(172,142,105,0.15)]
+            ${error ? "border-(--color-error) focus:border-(--color-error) focus:shadow-[0_0_0_3px_rgba(224,92,92,0.15)]" : ""}
             ${isPassword ? "pr-11" : ""}
             ${className}
             `}
@@ -60,7 +60,7 @@ export const Input: React.FC<InputProps> = ({
             <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--khaki-400)] transition-colors duration-200 focus:outline-none"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--khaki-400) transition-colors duration-200 focus:outline-none"
             tabIndex={-1}
             >   {showPassword ? (
               // Eye-off icon
@@ -82,7 +82,7 @@ export const Input: React.FC<InputProps> = ({
 
       {/* Error message */}
       {error && (
-        <p className="text-xs text-[var(--color-error)] flex items-center gap-1 mt-0.5">
+        <p className="text-xs text-(--color-error) flex items-center gap-1 mt-0.5">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
           </svg>

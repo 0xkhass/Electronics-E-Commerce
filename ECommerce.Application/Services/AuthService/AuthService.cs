@@ -50,7 +50,7 @@ namespace ECommerce.Application.Services.AuthService
             // Create user
             var user = new User(
                 registerUserDTO.UserName,
-                registerUserDTO.FirstName + registerUserDTO.LastName,
+                $"{registerUserDTO.FirstName} {registerUserDTO.FirstName}".Trim(),
                 registerUserDTO.Email,
                 passwordHash
             );
@@ -82,7 +82,6 @@ namespace ECommerce.Application.Services.AuthService
             // Verify password
             if (!BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.PasswordHash)) 
                 throw new ValidationException("Invalid email or password.");
-
 
             // Generate tokens
             var accessToken = GenerateAccessToken(user);
@@ -203,12 +202,16 @@ namespace ECommerce.Application.Services.AuthService
         {
             return new AuthResponseDTO
             {
-                UserId = user.UserId,
-                UserName = user.UserName,
-                Email = user.Email,
-                Role = user.Role.ToString(),
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                User = new UserDTO
+                {
+                    UserId = user.UserId,
+                    UserName = user.UserName,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Role = user.Role.ToString()
+                }
             };
         }
 

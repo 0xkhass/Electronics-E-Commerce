@@ -1,10 +1,8 @@
-@import "tailwindcss";
-
 /* ============================================
-   TECH STORE — COLOR SYSTEM
-   Refined Dark Theme for Premium Electronics
-   ============================================ */
+TECH STORE — COLOR SYSTEM
+============================================ */
 
+@import "tailwindcss";
 :root {
 
   /* ── Core Palette ── */
@@ -99,7 +97,7 @@
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  /*padding: 0;*/
 }
 
 body {
@@ -119,7 +117,7 @@ h6 { font-size: 0.85rem; line-height: 1.5;  font-weight: 500; color: var(--khaki
 
 p {
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 /* ── Links ── */
@@ -139,11 +137,6 @@ input, textarea, select {
   color: var(--text-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  padding: 0.6rem 1rem;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
 }
 input::placeholder, textarea::placeholder {
   color: var(--text-muted);
