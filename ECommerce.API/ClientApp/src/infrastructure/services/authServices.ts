@@ -1,5 +1,5 @@
 import type { User } from '../../shared/types/User';
-import { api } from '../api/axiosClient';
+import { api } from '../../core/api/axiosClient';
 
 export const loginApi = async (email: string, password: string) : Promise<User> => {
     const { data} = await api.post<User>('/api/Auth/login', {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRegister } from "../../application/hooks/useRegister";
+import { useRegister } from "../../app/hooks/useRegister";
 import { getPasswordStrength } from "../../shared/utils/passwordStrengthChecker";
 import { ChipIcon } from "../../assets/icons/ChipIcon";
 import { Link } from "react-router-dom";
@@ -8,9 +8,10 @@ import { CheckIcon } from "../../assets/icons/CheckIcon";
 import { EmailIcon } from "../../assets/icons/EmailIcon";
 import { LockIcon } from "../../assets/icons/LockIcon";
 import { UserIcon } from "../../assets/icons/UserIcon";
-import { PERKS } from "../../shared/constants/Perks";
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
+
+import { Button } from "../components/shared/Button";
+import { Input } from "../components/shared/Input";
+import { PERKS } from "../../core/constants/perks";
 
 
 
@@ -177,7 +178,7 @@ export default function RegisterPage() {
                 id="fullName"
                 placeholder="John Doe"
                 value={fullName}
-                onChange={(e) => setFullname(e.target.value)}
+                onChange={(e: React.SubmitEvent) => setFullname(e.target.value)}
                 icon={<UserIcon />}
                 required
                 autoComplete="name"
@@ -188,7 +189,7 @@ export default function RegisterPage() {
                 id="username"
                 placeholder="johndoe"
                 value={userName}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e: React.SubmitEvent) => setUsername(e.target.value)}
                 icon={<AtIcon />}
                 required
                 autoComplete="username"
@@ -201,7 +202,7 @@ export default function RegisterPage() {
               id="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.SubmitEvent) => setEmail(e.target.value)}
               icon={<EmailIcon />}
               error={error?.field === 'email' ? error.message : undefined}
               required
@@ -215,7 +216,7 @@ export default function RegisterPage() {
                 id="password"
                 placeholder="Min. 8 characters"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.SubmitEvent) => setPassword(e.target.value)}
                 icon={<LockIcon />}
                 error={error?.field === 'password' ? error.message : undefined}
                 required
@@ -254,7 +255,7 @@ export default function RegisterPage() {
               id="confirmPassword"
               placeholder="Repeat your password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e: React.SubmitEvent) => setConfirmPassword(e.target.value)}
               icon={<LockIcon />}
               error={error?.field === 'confirmPassword' ? error.message : undefined}
               required

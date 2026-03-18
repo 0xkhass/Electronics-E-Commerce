@@ -1,4 +1,4 @@
-import type { ButtonProps } from "../../shared/types/components/ButtonProps"
+import type { ButtonProps } from "../../../shared/types/components/ButtonProps"
 
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',

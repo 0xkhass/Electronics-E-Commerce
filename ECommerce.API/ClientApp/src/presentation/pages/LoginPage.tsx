@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useLogin } from '../../application/hooks/useLogin'
+import { useLogin } from '../../app/hooks/useLogin'
 import { ChipIcon } from '../../assets/icons/ChipIcon'
 import { SPECS } from '../../shared/types/components/SpecsProps'
-import { Input } from '../components/Input'
 import { EmailIcon } from '../../assets/icons/EmailIcon'
 import { LockIcon } from '../../assets/icons/LockIcon'
-import { Button } from '../components/Button'
+import { Button } from '../components/shared/Button'
+import { Input } from '../components/shared/Input'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -162,7 +162,7 @@ export default function LoginPage() {
               id="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.SubmitEvent) => setEmail(e.target.value)}
               icon={<EmailIcon />}
               required
               autoComplete="email"
@@ -174,7 +174,7 @@ export default function LoginPage() {
               id="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.SubmitEvent) => setPassword(e.target.value)}
               icon={<LockIcon />}
               required
               autoComplete="current-password"

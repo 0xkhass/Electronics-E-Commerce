@@ -1,4 +1,4 @@
-import type { PasswordStrengthChecker } from "../types/PasswordStrengthChecker";
+import type { PasswordStrengthChecker } from "../types/ui/PasswordStrengthCheckerType";
 
 // password strength checker
 export function getPasswordStrength(password: string): PasswordStrengthChecker {
