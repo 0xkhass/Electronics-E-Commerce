@@ -28,10 +28,10 @@ export const authService = {
     return data;
   },
   getCurrentUser: async (): Promise<User> => {
-    const { data } = await api.get<User>("/api/user");
+    const { data } = await api.get<User>("/api/auth/me");
     return data;
   },
   logoutApi: async (): Promise<void> => {
-    await api.get("/api/auth/logout");
+    await api.post("/api/auth/logout");
   },
 };

@@ -1,3 +1,5 @@
+import { useAuthContext } from "../../presentation/contexts/AuthContext";
+
 export const shopLinks = [
   { label: "All Products", to: "/products" },
   { label: "Deals & Offers", to: "/deals" },
@@ -6,13 +8,21 @@ export const shopLinks = [
   { label: "Accessories", to: "/products?category=accessories" },
 ];
 
-export const accountLinks = [
-  { label: "My Profile", to: "/profile" },
-  { label: "Order History", to: "/orders" },
-  { label: "Cart", to: "/cart" },
-  { label: "Sign In", to: "/login" },
-  { label: "Create Account", to: "/register" },
-];
+export const useAccountLinks = () => {
+  const { isAuthenticated } = useAuthContext();
+
+  const accountLinks = [
+    { label: "My Profile", to: "/profile" },
+    { label: "Order History", to: "/orders" },
+    { label: "Cart", to: "/cart" },
+    ...(!isAuthenticated ? [
+      { label: "Sign In", to: "/login" },
+      { label: "Create Account", to: "/register" },
+    ] : []),
+  ];
+
+  return accountLinks;
+};
 
 export const supportLinks = [
   { label: "FAQ", to: "/faq" },

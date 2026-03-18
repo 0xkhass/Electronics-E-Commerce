@@ -1,4 +1,5 @@
-﻿using ECommerce.Application.DTOs.Auth;
+﻿using ECommerce.API.Middleware;
+using ECommerce.Application.DTOs.Auth;
 using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +40,7 @@ namespace ECommerce.API.Controllers
             { 
                 HttpOnly = true, // js can't read this
                 Secure = true, // Require https
-                SameSite = SameSiteMode.Strict, // no csrf
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(7),
             };
 
@@ -63,11 +64,20 @@ namespace ECommerce.API.Controllers
         // POST : api/Auth/logout
         [HttpPost("logout")]
         [Authorize]
-        public async Task<IActionResult> Logout([FromBody] RefreshTokenDTO refreshTokenDTO)
+        public async Task<IActionResult> Logout()
         {
-            await _authService.LogoutAsync(refreshTokenDTO);
-            Response.Cookies.Delete("accessToken");
-            Response.Cookies.Delete("refreshToken");
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (refreshToken is null) return BadRequest();
+
+            await _authService.LogoutAsync(new RefreshTokenDTO { RefreshToken = refreshToken });
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+            };
+            Response.Cookies.Delete("accessToken", cookieOptions);
+            Response.Cookies.Delete("refreshToken", cookieOptions);
             return NoContent();
         }
 

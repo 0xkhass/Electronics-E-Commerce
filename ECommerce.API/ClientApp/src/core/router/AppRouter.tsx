@@ -3,6 +3,7 @@ import LoginPage from "../../presentation/pages/LoginPage";
 import RegisterPage from "../../presentation/pages/RegisterPage";
 import { Layout } from "../../presentation/components/layout/Layout";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { PublicRoute } from "./PublicRoute";
 
 // Pages (replace with your actual imports as you build them)
 // import HomePage from "../presentation/pages/HomePage";
@@ -15,10 +16,11 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* ── Standalone auth pages (no header/footer) ── */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
 
         {/* ── Public pages (with Layout) ── */}
         <Route element={<Layout />}>
@@ -39,7 +41,6 @@ export const AppRouter = () => {
 
         {/* ── Fallback ── */}
         <Route path="*" element={<Navigate to="/" replace />} />
-
       </Routes>
     </BrowserRouter>
   );

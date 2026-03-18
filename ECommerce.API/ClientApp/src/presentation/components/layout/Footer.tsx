@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { ChipIcon } from "../../../assets/icons/ChipIcon";
 import {
-  accountLinks,
   shopLinks,
   supportLinks,
+  useAccountLinks,
 } from "../../../core/constants/footerConstants";
 
 export const Footer = () => {
   const year = new Date().getFullYear();
-
+  const accountLinks = useAccountLinks();
   return (
     <footer className="bg-(--charcoal-900) border-t border-(--border-subtle) mt-auto">
       <div className="max-w-8xl mx-auto px-6 md:px-8 pt-14 pb-8">
