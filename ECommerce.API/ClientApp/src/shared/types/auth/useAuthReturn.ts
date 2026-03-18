@@ -4,7 +4,7 @@ import type { RegisterCredentials } from "./AuthCredentials";
 export interface UseAuthReturn {
     handleRegister?: (credentail: RegisterCredentials) => Promise<void>;
     handleLogin?: (credential: LoginCredentials) => Promise<void>;
-    isLoading: boolean
+    isLoading: boolean;
     error: AuthError | null;
     clearError: () => void;
 };

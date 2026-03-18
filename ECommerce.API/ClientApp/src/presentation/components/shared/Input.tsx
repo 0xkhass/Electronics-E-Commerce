@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { InputProps } from "../../shared/types/components/InputProps";
+import type { InputProps } from "../../../shared/types/components/InputProps";
 
 export const Input: React.FC<InputProps> = ({
   label,
@@ -30,7 +30,7 @@ export const Input: React.FC<InputProps> = ({
         {/* Left Icon */}
         {icon && (
           <span
-            className="absolute left-3 top-1/3 -transalte-y-1/2 text-(--text-muted) 
+            className="absolute left-3 top-1/3 -transalate-y-1/2 text-(--text-muted) 
                     group-focus-within:text-(--tan-500) transition-colors duration-200"
           >
             {icon}
@@ -61,7 +61,8 @@ export const Input: React.FC<InputProps> = ({
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             className="absolute right-3.5 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--khaki-400) transition-colors duration-200 focus:outline-none"
-            tabIndex={-1}
+            aria-label={showPassword ? "Hide Password" : "Show Password"}
+            aria-pressed={showPassword}
             >   {showPassword ? (
               // Eye-off icon
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

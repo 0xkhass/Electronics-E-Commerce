@@ -50,7 +50,7 @@ namespace ECommerce.Application.Services.AuthService
             // Create user
             var user = new User(
                 registerUserDTO.UserName,
-                $"{registerUserDTO.FirstName} {registerUserDTO.FirstName}".Trim(),
+                $"{registerUserDTO.FirstName} {registerUserDTO.LastName}".Trim(),
                 registerUserDTO.Email,
                 passwordHash
             );

@@ -162,7 +162,7 @@ export default function LoginPage() {
               id="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e: React.SubmitEvent) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               icon={<EmailIcon />}
               required
               autoComplete="email"
@@ -174,7 +174,7 @@ export default function LoginPage() {
               id="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e: React.SubmitEvent) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               icon={<LockIcon />}
               required
               autoComplete="current-password"

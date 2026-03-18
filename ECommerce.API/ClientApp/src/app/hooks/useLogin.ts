@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  loginApi } from "../../infrastructure/services/authServices";
+import {  authService } from "../../infrastructure/services/authServices";
 import type { AuthError } from "../../shared/types/auth/AuthError";
 import type { LoginCredentials } from "../../shared/types/auth/AuthCredentials";
 import { useAuthContext } from "../../presentation/contexts/AuthContext";
@@ -18,7 +18,7 @@ export function useLogin(): UseAuthReturn {
     setError(null);
 
     try {
-      const data = await loginApi(email, password);
+      const data = await authService.loginApi(email, password);
 
       login(data);
 

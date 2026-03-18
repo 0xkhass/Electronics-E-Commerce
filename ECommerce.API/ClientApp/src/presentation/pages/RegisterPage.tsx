@@ -178,7 +178,7 @@ export default function RegisterPage() {
                 id="fullName"
                 placeholder="John Doe"
                 value={fullName}
-                onChange={(e: React.SubmitEvent) => setFullname(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFullname(e.target.value)}
                 icon={<UserIcon />}
                 required
                 autoComplete="name"
@@ -189,7 +189,7 @@ export default function RegisterPage() {
                 id="username"
                 placeholder="johndoe"
                 value={userName}
-                onChange={(e: React.SubmitEvent) => setUsername(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
                 icon={<AtIcon />}
                 required
                 autoComplete="username"
@@ -202,7 +202,7 @@ export default function RegisterPage() {
               id="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e: React.SubmitEvent) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               icon={<EmailIcon />}
               error={error?.field === 'email' ? error.message : undefined}
               required
@@ -216,7 +216,7 @@ export default function RegisterPage() {
                 id="password"
                 placeholder="Min. 8 characters"
                 value={password}
-                onChange={(e: React.SubmitEvent) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 icon={<LockIcon />}
                 error={error?.field === 'password' ? error.message : undefined}
                 required
@@ -255,7 +255,7 @@ export default function RegisterPage() {
               id="confirmPassword"
               placeholder="Repeat your password"
               value={confirmPassword}
-              onChange={(e: React.SubmitEvent) => setConfirmPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
               icon={<LockIcon />}
               error={error?.field === 'confirmPassword' ? error.message : undefined}
               required

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import type { AuthError } from "../../shared/types/auth/AuthError";
-import type { RegisterCredentials } from "../../shared/types/auth/RegisterCredentials";
-import { registerApi } from "../../infrastructure/services/authServices";
+import { authService } from "../../infrastructure/services/authServices";
 import type { UseAuthReturn } from "../../shared/types/auth/useAuthReturn";
 import { useAuthContext } from "../../presentation/contexts/AuthContext";
-
+import type { RegisterCredentials } from "../../shared/types/auth/AuthCredentials";
 
 export function useRegister(): UseAuthReturn {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,25 +18,25 @@ export function useRegister(): UseAuthReturn {
     password,
     userName,
     firstName,
-    lastName
+    lastName,
   }: RegisterCredentials) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const data = await registerApi(
+      const data = await authService.registerApi(
         email,
         password,
         userName,
         firstName,
-        lastName
+        lastName,
       );
 
       login(data);
 
-      console.log(data.user);
+      console.log(data);
       window.location.href = "/";
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const status = error?.response?.status;
 
@@ -68,7 +67,7 @@ export function useRegister(): UseAuthReturn {
         });
       }
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
