@@ -86,5 +86,26 @@ namespace ECommerce.API.Controllers
             await _authService.ChangePasswordAsync(changePasswordDTO);
             return NoContent();
         }
+
+        // GET: api/Auth/me
+        [HttpGet("me")]
+        [Authorize]
+        public IActionResult GetCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+
+            if (userId is null) return Unauthorized();
+
+            return Ok(new
+            {
+                UserId = Guid.Parse(userId),
+                UserName = userName,
+                Email = email,
+                Role = role
+            });
+        }
     }
 }
