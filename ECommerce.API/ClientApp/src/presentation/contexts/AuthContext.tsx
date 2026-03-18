@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { AuthContextType } from "../../shared/types/auth/AuthContextType";
 import type { User } from "../../shared/types/User";
-import { getCurrentUser } from "../../infrastructure/services/authServices";
+import { authService } from "../../infrastructure/services/authServices";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const checkSession = async () => {
       try {
         // This endpoint should return the User object if the cookie is valid
-        const currentUser = await getCurrentUser(); 
+        const currentUser = await authService.getCurrentUser(); 
         setUser(currentUser);
       } catch {
         // No valid cookie, user remains null
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    await logout(); // Call backend to clear cookies
+    await authService.logoutApi(); // Call backend to clear cookies
     setUser(null);
   };
 

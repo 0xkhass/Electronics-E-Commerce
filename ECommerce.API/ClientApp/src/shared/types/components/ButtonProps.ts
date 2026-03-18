@@ -1,6 +1,8 @@
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import type { ButtonHTMLAttributes, ReactNode } from "react"
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost'
   isLoading?: boolean
   fullWidth?: boolean
-  children: React.ReactNode
+  children: ReactNode
 }
